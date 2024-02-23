@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <title>CryptoCompass</title>
+    <link href="/styles/main.css" rel="stylesheet">
+</head>
+<body>
+    
+    <!--hero-->
+
+    <div class="hero-cont">
+        <div class="logo">
+            <img src="images\logo-transparent.png">
+        </div>
+        <div class="hero-txt plus-jakarta">
+            <h1>Quickly monitor your favorite crypto currencies at a glance</h1>
+        </div>
+    </div>
+
+    <!--top coins-->
+
+    <div class="top-cont">
+        <div class="head plus-jakarta">
+            <h2>Top Coins</h2>
+        </div>
+        <div class="card-cont">
+            <div class="card">
+                <div class="coin-name">
+                    <h3 class='plus-jakarta'><strong><%= first.name %></strong></h3>
+                </div>
+                <div class="card-main">
+                <div class="icon">
+                    <img src= <%= first.iconUrl %> >
+                </div>
+                <div class="info">
+                    <ul class="plus-jakarta">
+                        <li><span>Market Cap:</span> <%= first.marketCap %></li>
+                        <li><span>Rank:</span> <%= first.rank %></li>
+                        <li><span>Change:</span> <%= first.change %></li>
+                        <li><span>24hr Volume:</span> <%= first["24hVolume"] %></li>
+                        <li><span>Price:</span> $<%= fPrice %></li>
+                    </ul>
+                </div>
+                <div class="carrot">
+                    <% if (first.change > 0) { %>
+                        <img src='/images/green-carrot.png'>
+                    <% } else if (first.change < 0) { %>
+                        <img src="/images/red-carrot.png">
+                    <% } %>    
+                </div>
+              </div>
+            </div>
+            <div class="card">
+                <div class="coin-name">
+                    <h3 class="plus-jakarta"><strong><%= second.name %></strong></h3>
+                </div>
+                <div class="card-main">
+                <div class="icon">
+                    <img src= <%= second.iconUrl %> >
+                </div>
+                <div class="info">
+                    <ul class="plus-jakarta">
+                        <li><span>Market Cap:</span> <%= second.marketCap %></li>
+                        <li><span>Rank:</span> <%= second.rank %></li>
+                        <li><span>Change:</span> <%= second.change %></li>
+                        <li><span>24hr Volume:</span> <%= second["24hVolume"] %></li>
+                        <li><span>Price:</span> $<%= sPrice %></li>
+                    </ul>
+                </div>
+                <div class="carrot">
+                    <% if (second.change > 0) { %>
+                        <img src='/images/green-carrot.png'>
+                    <% } else if (second.change < 0) { %>
+                        <img src="/images/red-carrot.png">
+                    <% } %>    
+                </div>
+              </div>
+            </div>
+            <div class="card">
+                <div class="coin-name">
+                    <h3 class="plus-jakarta"><strong><%= third.name %></strong></h3>
+                </div>
+                <div class="card-main">
+                <div class="icon">
+                    <img src= <%= third.iconUrl %> >
+                </div>
+                <div class="info">
+                    <ul class="plus-jakarta">
+                        <li><span>Market Cap:</span> <%= third.marketCap %></li>
+                        <li><span>Rank:</span> <%= third.rank %></li>
+                        <li><span>Change:</span> <%= third.change %></li>
+                        <li><span>24hr Volume:</span> <%= third["24hVolume"] %></li>
+                        <li><span>Price:</span> $<%= tPrice %></li>
+                    </ul>
+                </div>
+                <div class="carrot">
+                    <% if (third.change > 0) { %>
+                        <img src='/images/green-carrot.png'>
+                    <% } else if (third.change < 0) { %>
+                        <img src="/images/red-carrot.png">
+                    <% } %>    
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <!--search-->
+
+    <div class="s-cont">
+        <div class="head plus-jakarta">
+            <h2>Search</h2>
+        </div>
+        <div class="res">
+            <form action="/search" method="POST">
+                <input class="search plus-jakarta" type="text" name="name" placeholder="Coin Name Or Symbol" required>
+
+                <% if (locals.user) { %>
+                    <div class="card">
+                        <div class="coin-name">
+                            <h3 class="plus-jakarta"><strong><%=user.name %></strong></h3>
+                        </div>
+                        <div class="card-main">
+                        <div class="icon">
+                            <img src= <%= user.iconUrl %> >
+                        </div>
+                        <div class="info">
+                            <ul class="plus-jakarta">
+                                <li><span>Market Cap:</span> <%= user.marketCap %></li>
+                                <li><span>Rank:</span> <%= user.rank %></li>
+                                <li><span>Change:</span> <%= user.change %></li>
+                                <li><span>24hr Volume:</span> <%= user["24hVolume"] %></li>
+                                <li><span>Price:</span> $<%= uPrice %></li>
+                            </ul>
+                        </div>
+                        <div class="carrot">
+                            <% if (user.change > 0) { %>
+                                <img src='/images/green-carrot.png'>
+                            <% } else if (user.change < 0) { %>
+                                <img src="/images/red-carrot.png">
+                            <% } %>    
+                        </div>
+                      </div>
+                    </div>
+                <% } %>
+
+                <input class="btn plus-jakarta" type="submit" value="Search">
+            </form>
+        </div>
+    </div>
+
+    
+</body>
+</html>
