@@ -19,27 +19,27 @@ app.use(express.static("public"));
 
 app.get('/', async (req, res) => {
     try {
-        const response = await axios.get(api_url + "?scopeId=marketCap&scopeLimit=3&orderBy=marketCap", options);
-        const first = response.data.data.coins[0];
-        const second = response.data.data.coins[1];
-        const third = response.data.data.coins[2];
-        const price1 = first.price;
-        const price2 = second.price;
-        const price3 = third.price;
+        const response = await axios.get(api_url + "?scopeId=marketCap&scopeLimit=10&orderBy=marketCap", options);
+      
+        var coin = [];
+        var price = [];
+        var volume = [];
+      
         function money_round (num) {
             return Math.ceil(num * 100) / 100;
         }
-        const first_price = money_round(price1);
-        console.log(first_price);
-        const second_price = money_round(price2);
-        const third_price = money_round(price3);
+
+        for (let i = 0; i < 10; i++) {
+          coin[i] = response.data.data.coins[i];
+          price[i] = money_round(response.data.data.coins[i].price);
+          volume[i] = response.data.data.coins[i]['24hVolume'];
+        };
+      
+      
         res.render('index.ejs', {
-            first: first,
-            second: second, 
-            third: third,
-            fPrice: first_price,
-            sPrice: second_price,
-            tPrice: third_price
+            coin: coin,
+            price: price,
+            volume: volume
         });
     }  catch (err) {
         console.log(err.message);
@@ -51,30 +51,31 @@ app.post('/search', async (req, res) => {
     const search = req.body.name;
     try {
         const response = await axios.get(api_url + "?search=" + search, options);
-        const topRes = await axios.get(api_url + "?scopeId=marketCap&scopeLimit=3&orderBy=marketCap", options);
-        const first = topRes.data.data.coins[0];
-        const second = topRes.data.data.coins[1];
-        const third = topRes.data.data.coins[2];
-        const user = response.data.data.coins[0]
-        const price1 = first.price;
-        const price2 = second.price;
-        const price3 = third.price;
+        const topRes = await axios.get(api_url + "?scopeId=marketCap&scopeLimit=10&orderBy=marketCap", options);
+  
+        var coin = [];
+        var price = [];
+        var volume = [];
+
         function money_round (num) {
             return Math.ceil(num * 100) / 100;
         }
-        const first_price = money_round(price1);
-        const second_price = money_round(price2);
-        const third_price = money_round(price3);
-        const user_price = money_round(user.price)
+
+      for (let i = 0; i < 10; i++) {
+        coin[i] = topRes.data.data.coins[i];
+        price[i] = money_round(topRes.data.data.coins[i].price);
+        volume[i] = topRes.data.data.coins[i]['24hVolume'];
+      };
+      
+        const user = response.data.data.coins[0]
+        const user_price = money_round(user.price);
+
         res.render('index.ejs', {
             user: user,
-            first: first,
-            second: second,
-            third: third,
-            uPrice: user_price,
-            fPrice: first_price,
-            sPrice: second_price,
-            tPrice: third_price
+            user_price: user_price,
+            coin: coin,
+            price: price,
+            volume: volume
         });
     } catch (err) {
         console.log(err.message);
