@@ -10,8 +10,8 @@
     <link href="/styles/main.css" rel="stylesheet">
 </head>
 <body>
-    
-    <!--hero-->
+
+    <!--hero--> 
 
     <div class="hero-cont">
         <div class="logo">
@@ -29,87 +29,41 @@
             <h2>Top Coins</h2>
         </div>
         <div class="card-cont">
-            <div class="card">
-                <div class="coin-name">
-                    <h3 class='plus-jakarta'><strong><%= first.name %></strong></h3>
-                </div>
-                <div class="card-main">
-                <div class="icon">
-                    <img src= <%= first.iconUrl %> >
-                </div>
-                <div class="info">
-                    <ul class="plus-jakarta">
-                        <li><span>Market Cap:</span> <%= first.marketCap %></li>
-                        <li><span>Rank:</span> <%= first.rank %></li>
-                        <li><span>Change:</span> <%= first.change %></li>
-                        <li><span>24hr Volume:</span> <%= first["24hVolume"] %></li>
-                        <li><span>Price:</span> $<%= fPrice %></li>
-                    </ul>
-                </div>
-                <div class="carrot">
-                    <% if (first.change > 0) { %>
-                        <img src='/images/green-carrot.png'>
-                    <% } else if (first.change < 0) { %>
-                        <img src="/images/red-carrot.png">
-                    <% } %>    
-                </div>
-              </div>
-            </div>
-            <div class="card">
-                <div class="coin-name">
-                    <h3 class="plus-jakarta"><strong><%= second.name %></strong></h3>
-                </div>
-                <div class="card-main">
-                <div class="icon">
-                    <img src= <%= second.iconUrl %> >
-                </div>
-                <div class="info">
-                    <ul class="plus-jakarta">
-                        <li><span>Market Cap:</span> <%= second.marketCap %></li>
-                        <li><span>Rank:</span> <%= second.rank %></li>
-                        <li><span>Change:</span> <%= second.change %></li>
-                        <li><span>24hr Volume:</span> <%= second["24hVolume"] %></li>
-                        <li><span>Price:</span> $<%= sPrice %></li>
-                    </ul>
-                </div>
-                <div class="carrot">
-                    <% if (second.change > 0) { %>
-                        <img src='/images/green-carrot.png'>
-                    <% } else if (second.change < 0) { %>
-                        <img src="/images/red-carrot.png">
-                    <% } %>    
+          <ul>
+            <% for (let i = 0; i < 10; i++) { %>
+            <li>
+              <div class="card">
+                  <div class="coin-name">
+                      <h3 class='plus-jakarta'><strong><%= coin[i].name %></strong></h3>
+                  </div>
+                  <div class="card-main">
+                  <div class="icon">
+                      <img src= <%= coin[i].iconUrl %> >
+                  </div>
+                  <div class="info">
+                      <ul class="plus-jakarta">
+                          <li><span>Market Cap:</span> <%= coin[i].marketCap %></li>
+                          <li><span>Rank:</span> <%= coin[i].rank %></li>
+                          <li><span>Change:</span> <%= coin[i].change %></li>
+                          <li><span>24hr Volume:</span> <%= volume[i] %></li>
+                          <li><span>Price:</span> $<%= price[i] %></li>
+                      </ul>
+                  </div>
+                  <div class="carrot">
+                      <% if (coin[i].change > 0) { %>
+                          <img src='/images/green-carrot.png'>
+                      <% } else if (coin[i].change < 0) { %>
+                          <img src="/images/red-carrot.png">
+                      <% } %>    
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="card">
-                <div class="coin-name">
-                    <h3 class="plus-jakarta"><strong><%= third.name %></strong></h3>
-                </div>
-                <div class="card-main">
-                <div class="icon">
-                    <img src= <%= third.iconUrl %> >
-                </div>
-                <div class="info">
-                    <ul class="plus-jakarta">
-                        <li><span>Market Cap:</span> <%= third.marketCap %></li>
-                        <li><span>Rank:</span> <%= third.rank %></li>
-                        <li><span>Change:</span> <%= third.change %></li>
-                        <li><span>24hr Volume:</span> <%= third["24hVolume"] %></li>
-                        <li><span>Price:</span> $<%= tPrice %></li>
-                    </ul>
-                </div>
-                <div class="carrot">
-                    <% if (third.change > 0) { %>
-                        <img src='/images/green-carrot.png'>
-                    <% } else if (third.change < 0) { %>
-                        <img src="/images/red-carrot.png">
-                    <% } %>    
-                </div>
-              </div>
-            </div>
-        </div>
+             </li>
+            <% } %>
+            </ul>   
+      </div>
     </div>
-
+              
     <!--search-->
 
     <div class="s-cont">
@@ -123,7 +77,7 @@
                 <% if (locals.user) { %>
                     <div class="card">
                         <div class="coin-name">
-                            <h3 class="plus-jakarta"><strong><%=user.name %></strong></h3>
+                            <h3 class="plus-jakarta"><strong><%= user.name %></strong></h3>
                         </div>
                         <div class="card-main">
                         <div class="icon">
@@ -135,7 +89,7 @@
                                 <li><span>Rank:</span> <%= user.rank %></li>
                                 <li><span>Change:</span> <%= user.change %></li>
                                 <li><span>24hr Volume:</span> <%= user["24hVolume"] %></li>
-                                <li><span>Price:</span> $<%= uPrice %></li>
+                                <li><span>Price:</span> $<%= user_price %></li>
                             </ul>
                         </div>
                         <div class="carrot">
@@ -154,6 +108,30 @@
         </div>
     </div>
 
-    
+    <!--grow script-->
+
+    <script>
+
+        const cards = document.querySelectorAll(".card");
+
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].onmouseenter = function() {
+                console.log(this);
+                this.classList.remove('shrink');
+                this.classList.add("grow");
+            }
+
+            cards[i].onmouseleave = function() {
+                setTimeout(function() {
+                    this.classList.remove('grow');
+                    this.classList.add('shrink')
+                }.bind(this), 0)
+            }
+        }
+
+
+    </script>
+
+
 </body>
 </html>
